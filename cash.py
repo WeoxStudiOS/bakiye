@@ -46,7 +46,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=reply_markup
     )
 
-# Bakiye seçenekleri gösterme
+# Bakiye seçeneklerini güncelleme
 async def show_balance_options(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     user_id = query.from_user.id
@@ -59,9 +59,9 @@ async def show_balance_options(update: Update, context: ContextTypes.DEFAULT_TYP
     new_text = "Lütfen almak istediğiniz Bakiye miktarını seçin:"
     keyboard = [
         [InlineKeyboardButton("10K BAKİYE 500₺", callback_data="10k_500")],
-        [InlineKeyboardButton("30K BAKİYE 1000₺", callback_data="30k_1000")],
-        [InlineKeyboardButton("50K BAKİYE 5000₺", callback_data="50k_5000")],
-        [InlineKeyboardButton("100K BAKİYE 8000₺", callback_data="100k_8000")],
+        [InlineKeyboardButton("30K BAKİYE 800₺", callback_data="30k_800")],
+        [InlineKeyboardButton("50K BAKİYE 1000₺", callback_data="50k_1000")],
+        [InlineKeyboardButton("100K BAKİYE 1500₺", callback_data="100k_1500")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -72,7 +72,7 @@ async def show_balance_options(update: Update, context: ContextTypes.DEFAULT_TYP
             reply_markup=reply_markup
         )
 
-# Ödeme yöntemlerini gösterme
+# Ödeme seçeneklerini güncelleme
 async def show_payment_options(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     user_id = query.from_user.id
@@ -83,9 +83,9 @@ async def show_payment_options(update: Update, context: ContextTypes.DEFAULT_TYP
 
     selection_map = {
         "10k_500": ("500₺", "10K Bakiye"),
-        "30k_1000": ("1000₺", "30K Bakiye"),
-        "50k_5000": ("5000₺", "50K Bakiye"),
-        "100k_8000": ("8000₺", "100K Bakiye")
+        "30k_800": ("800₺", "30K Bakiye"),
+        "50k_1000": ("1000₺", "50K Bakiye"),
+        "100k_1500": ("1500₺", "100K Bakiye")
     }
     selected_price, selected_balance = selection_map.get(query.data, ("Bilinmeyen Fiyat", "Bilinmeyen Bakiye"))
 
@@ -184,7 +184,7 @@ if __name__ == "__main__":
     # Komutları ekleme
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(show_balance_options, pattern="^buy_balance$"))
-    application.add_handler(CallbackQueryHandler(show_payment_options, pattern="^(10k_500|30k_1000|50k_5000|100k_8000)$"))
+    application.add_handler(CallbackQueryHandler(show_payment_options, pattern="^(10k_500|30k_800|50k_1000|100k_1500)$"))
     application.add_handler(CallbackQueryHandler(iban_payment, pattern="^iban_payment$"))
     application.add_handler(CallbackQueryHandler(crypto_payment, pattern="^crypto_payment$"))
     application.add_handler(MessageHandler(filters.Document.ALL, handle_document))
