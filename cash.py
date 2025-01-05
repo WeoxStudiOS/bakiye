@@ -51,17 +51,17 @@ async def show_balance_options(update: Update, context: ContextTypes.DEFAULT_TYP
     query = update.callback_query
     user_id = query.from_user.id
     if user_id in banned_users:
-        return  # Eğer kullanıcı banlıysa, mesaj atma.
+        return  # Eğer kullanıcı banlıysa, mesaj atma
 
     await query.answer()
 
     # Yeni içerik ve reply_markup
     new_text = "Lütfen almak istediğiniz Bakiye miktarını seçin:"
     keyboard = [
-        [InlineKeyboardButton("10K BAKİYE 500₺", callback_data="10k_500")],
-        [InlineKeyboardButton("30K BAKİYE 800₺", callback_data="30k_800")],
-        [InlineKeyboardButton("50K BAKİYE 1000₺", callback_data="50k_1000")],
-        [InlineKeyboardButton("100K BAKİYE 1500₺", callback_data="100k_1500")],
+        [InlineKeyboardButton("10K Bakiye 500₺", callback_data="10k_500")],
+        [InlineKeyboardButton("30K Bakiye 800₺", callback_data="30k_800")],
+        [InlineKeyboardButton("50K Bakiye 1000₺", callback_data="50k_1000")],
+        [InlineKeyboardButton("100K Bakiye 1500₺", callback_data="100k_1500")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -77,7 +77,7 @@ async def show_payment_options(update: Update, context: ContextTypes.DEFAULT_TYP
     query = update.callback_query
     user_id = query.from_user.id
     if user_id in banned_users:
-        return  # Eğer kullanıcı banlıysa, mesaj atma.
+        return  # Eğer kullanıcı banlıysa, mesaj atma
 
     await query.answer()
 
@@ -94,6 +94,7 @@ async def show_payment_options(update: Update, context: ContextTypes.DEFAULT_TYP
         [InlineKeyboardButton("Kripto ile Ödeme", callback_data="crypto_payment")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
+
     await query.edit_message_text(
         f"{selected_price}'ye {selected_balance} almak istiyorsunuz. Lütfen ödeme yöntemini seçin:",
         reply_markup=reply_markup
@@ -104,7 +105,7 @@ async def iban_payment(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     user_id = query.from_user.id
     if user_id in banned_users:
-        return  # Eğer kullanıcı banlıysa, mesaj atma.
+        return  # Eğer kullanıcı banlıysa, mesaj atma
 
     await query.answer()
 
@@ -113,11 +114,12 @@ async def iban_payment(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await query.edit_message_text(
         f"📝 IBAN ile ödeme yapmak üzeresiniz:\n\n"
-        f"💳 IBAN: {iban}\n"
-        f"👤 Ad-Soyad: {name}\n\n"
-        f"✅ Ödeme Talimatı: Ödeme yaptıktan sonra dekontu bota PDF olarak gönderin. "
+        f"💳 IBAN: <code>{iban}</code>\n"
+        f"👤 Ad-Soyad: <code>{name}</code>\n\n"
+        f"✅ Ödeme Talimatı: Ödeme yaptıktan sonra dekontu bota PDF olarak gönderin.\n"
         f"⏳ Ödemeniz en fazla 2 saat içinde onaylanacak veya reddedilecektir.\n\n"
-        f"⚠️ Sorun mu yaşıyorsunuz? Sorun yaşadığınız ekranın ekran görüntüsünü alıp bize gönderin."
+        f"⚠️ Sorun mu yaşıyorsunuz? Sorun yaşadığınız ekranın ekran görüntüsünü alıp bize gönderin.",
+        parse_mode="HTML"  # HTML formatında mesaj
     )
 
 # Kripto ile ödeme
@@ -125,7 +127,7 @@ async def crypto_payment(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     user_id = query.from_user.id
     if user_id in banned_users:
-        return  # Eğer kullanıcı banlıysa, mesaj atma.
+        return  # Eğer kullanıcı banlıysa, mesaj atma
 
     await query.answer()
 
@@ -156,7 +158,7 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     if user_id in banned_users:
-        return  # Eğer kullanıcı banlıysa, mesaj atma.
+        return  # Eğer kullanıcı banlıysa, mesaj atma
 
     await update.message.reply_text("Lütfen PDF Gönderin.")
 
